@@ -1,0 +1,18 @@
+#board {
+    padding-bottom: 10px;
+    margin: 50px;
+}table {
+    background-color: black;
+}td {
+    border: 1px solid red;
+    width: 200px;
+    height: 200px;
+}
+td.alive {
+    background-color: green;
+}td.alive2 {
+    background-color:blue;
+} 
+td.dead {
+  background-color: black;
+}
