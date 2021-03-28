@@ -25,18 +25,23 @@ function cellClick() {
   let loc = this.id.split("_");
   let row = Number(loc[0]);
   let col = Number(loc[1]);
-  document.getElementById(row+"_"+col).disabled = true;
+  if (board[row][col] != undefined) {
+    alert("No... L")
+    return;
+  }
   if (count % 2 == 0) {
-    this.setAttribute('class', 'alive');
+    this.innerHTML = '<i class="fab fa-xbox"></i>'
+    this.click = false;
     board[row][col] = 1
     chekboard()
-  } else {
-    this.setAttribute('class', 'alive2');
-    document.getElementById(this.id).disabled = true;
-    board[row][col] = 2
+  var newCell = randomCell()
+  var newThis = document.getElementById(newCell[0]+"_"+newCell[1])
+    newThis.innerHTML = '<i class="fab fa-playstation"></i>'
+    newThis.click = false
+    board[newCell[0]][newCell[1]] = 2
     chekboard()
   }
-  count += 1;
+  count += 2;
   console.log(board)
 }
 window.onload = () => {
@@ -60,26 +65,45 @@ function chekboard() {
   }
   if (board[0][0] == checkVal && board[0][1] == checkVal && board[0][2] == checkVal) {
     alert(msg)
+    window.location.reload()
   }
   if (board[1][0] == checkVal && board[1][1] == checkVal && board[1][2] == checkVal) {
     alert(msg)
+    window.location.reload()
   }
   if (board[2][0] == checkVal && board[2][1] == checkVal && board[2][2] == checkVal) {
     alert(msg)
+    window.location.reload()
   }
   if (board[0][0] == checkVal && board[1][0] == checkVal && board[2][0] == checkVal) {
     alert(msg)
+    window.location.reload()
   }
   if (board[0][1] == checkVal && board[1][1] == checkVal && board[2][1] == checkVal) {
     alert(msg)
+    window.location.reload()
   }
   if (board[0][2] == checkVal && board[1][2] == checkVal && board[2][2] == checkVal) {
     alert(msg)
+    window.location.reload()
   }
   if (board[0][0] == checkVal && board[1][1] == checkVal && board[2][2] == checkVal) {
     alert(msg)
+    window.location.reload()
   }
   if (board[0][2] == checkVal && board[1][1] == checkVal && board[2][0] == checkVal) {
     alert(msg)
+    window.location.reload()
   }
+}
+
+function randomCell() {
+  var x = Math.floor(Math.random() * 3)
+  var y = Math.floor(Math.random() * 3)
+  while (board[x][y] != undefined) {
+    var x = Math.floor(Math.random() * 3)
+    var y = Math.floor(Math.random() * 3)
+
+  }
+  return [x, y]
 }
