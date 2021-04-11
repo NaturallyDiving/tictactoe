@@ -34,8 +34,8 @@ function cellClick() {
     this.click = false;
     board[row][col] = 1
     chekboard()
-  var newCell = randomCell()
-  var newThis = document.getElementById(newCell[0]+"_"+newCell[1])
+    var newCell = compMove([row, col])
+    var newThis = document.getElementById(newCell[0] + "_" + newCell[1])
     newThis.innerHTML = '<i class="fab fa-playstation"></i>'
     newThis.click = false
     board[newCell[0]][newCell[1]] = 2
@@ -57,11 +57,11 @@ function crerays() {
 
 function chekboard() {
   if (count % 2 == 0) {
-    var msg = "player 1 won"
+    var msg = "GG! XBOX WON"
     var checkVal = 1
   } else {
     var checkVal = 2
-    var msg = "player 2 won"
+    var msg = "GG! PLAYSTATION WON"
   }
   if (board[0][0] == checkVal && board[0][1] == checkVal && board[0][2] == checkVal) {
     alert(msg)
@@ -106,4 +106,88 @@ function randomCell() {
 
   }
   return [x, y]
+}
+
+function getaneigh(r, c) {
+  var count = 0
+  r = Number(r);
+  c = Number(c);
+  if (r > 0) {
+    if (c > 0 && board[r - 1][c - 1] == 1) {
+      return [r - 1, c - 1]
+    }
+    if (board[r - 1][c] == 1) {
+      return [r - 1, c]
+
+    }
+    if (c < cols - 1 && board[r - 1][c + 1] == 1) {
+      return [r - 1, c + 1]
+    }
+  }
+  if (c > 0 && board[r][c - 1] == 1) {
+    return [r, c - 1]
+  }
+  if (c < cols - 1 && board[r][c + 1] == 1) {
+    return [r, c + 1]
+  }
+  if (r + 1 < rows) {
+    if (c < 0 && board[r + 1][c - 1] == 1) {
+      return [r + 1, c - 1]
+    }
+    if (board[r + 1][c] == 1) {
+      return [r + 1, c]
+    }
+    if (c < cols - 1 && board[r + 1][c + 1] == 1) {
+      return [r + 1, c + 1]
+    }
+  }
+
+}
+
+function getmissing(cell1, cell2) {
+  if (cell1[0] == cell2[0]) {
+
+    if (cell1[1] == 0 || cell1[1] == 1 && cell2[1] == 1 || cell2[1] == 0) {
+      return [cell1[0], 2]
+    }
+    if (cell1[1] == 1 || cell1[1] == 2 && cell2[1] == 2 || cell2[1] == 1) {
+      return [cell1[0], 0]
+    }
+
+    if (cell1[1] == 0 || cell1[1] == 2 && cell2[1] == 2 || cell2[1] == 0)
+      return [cell1[0], 1]
+  }
+  if (cell1[0] == cell1[0] && cell2[0] == cell2[1]) {
+
+    if (cell1[0] == 0 || cell1[0] == 1 && cell2[0] == 1 || cell2[0] == 0) {
+      return [2, 2]
+    }
+    if (cell1[0] == 1 || cell1[0] == 2 && cell2[1] == 2 || cell2[1] == 1) {
+      return [0, 0]
+    }
+    if (cell1[0] == 0 || cell1[0] == 2 && cell2[1] == 2 || cell2[1] == 0) {
+      return [1, 1]
+    }
+  }
+  if (cell1[1] == cell2[1])
+  if (cell1[0] == 0 || cell1[0] == 1 && cell2[0] == 1 || cell2[0] == 0) {
+    return [2, cell2[1]]
+  }
+  if (cell1[0] == 1 || cell1[0] == 2 && cell2[1] == 2 || cell2[1] == 1) {
+    return [0, cell2[1]]
+  }
+  if (cell1[0] == 0 || cell1[0] == 2 && cell2[1] == 2 || cell2[1] == 0) {
+    return [1, cell2[1]]
+  }
+}
+
+function compMove(p1) {
+  var n = getaneigh(p1[0], p1[1])
+  if (n != undefined) {
+    var misscell = getmissing(p1, n)
+    if (misscell != undefined) {
+      return misscell
+    }
+  }
+  return randomCell()
 }
